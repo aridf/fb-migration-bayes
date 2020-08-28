@@ -12,7 +12,7 @@ library(tidyverse)
 library(boot)
 library(narcan) # this is a working package. Used to get fips codes/names dictionary. https://github.com/mkiang/narcan
 library(here)
-
+library(ipumsr)
 
 # 1. Read in data  ---------------------------------
 
@@ -21,8 +21,13 @@ library(here)
 ### ACS 1 year with the following variables: YEAR; STATEFIP; PERWT; SEX; AGE; BPL 
 ### for all years 2001-2016
 
-acs_file <- "path/to/your/file"
-dc <- read_csv(acs_file)
+#acs_file <- "path/to/your/file"
+#dc <- read_csv(acs_file)
+
+acs_cbk <- "~/data/acs/alexander_etal_2020.xml"
+ddi <- read_ipums_ddi(acs_cbk)
+ddi$file_name <- "alexander_etal_2020.dat"
+dc <- read_ipums_micro(ddi)
 
 # for this project, just keep males. 
 # starting age group is 15-19.
